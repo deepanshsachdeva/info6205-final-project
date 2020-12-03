@@ -19,7 +19,7 @@ public class MyPanel extends JPanel implements Observer {
     }
 
     public void update(Observable observable, Object o) {
-
+        this.setBackground(Color.GREEN);
             repaint();
         }
     }
