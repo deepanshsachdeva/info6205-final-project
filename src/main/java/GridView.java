@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GridView implements ActionListener {
+public class GridView implements ActionListener, Constants {
     private MyPanel panel = null;
     private VirusSimulation sim = new VirusSimulation();
     private JButton btnStart;
@@ -18,11 +18,9 @@ public class GridView implements ActionListener {
     private void initializeGrid(){
         //Simulation main screen frame.
         JFrame frame = new JFrame();
-        frame.setTitle("Covid-19 virus spreading simulation");
+        frame.setTitle(APP_NAME);
         frame.setResizable(false);
-        int frameWidth = 1400; // need to move in diff file
-        int frameHeight = 800; // need to move in diff file
-        frame.setSize(frameWidth, frameHeight);
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.setBackground(Color.GREEN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
