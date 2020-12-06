@@ -33,6 +33,7 @@ public class MyPanel extends JPanel implements Observer, Constants {
     public void update(Observable observable, Object o) {
         if (o instanceof VirusSimulation) {
             updateLocations();
+            this.setBackground(Color.GREEN);
             repaint();
         }
     }
