@@ -38,8 +38,8 @@ public class MyPanel extends JPanel implements Observer, Constants {
     }
 
     public void updateLocations(){
-        for(int i=0 ; i < perLocation.length; i++ ){
-            for(int j =0; j < perLocation[i].length; j++){
+        for(int i=0 ; i < perLocation.length ; i++ ){
+            for(int j =0; j < perLocation[i].length ; j++){
                 if(perLocation[i][j] != null)
                     updateCoordinates(perLocation[i][j]);
             }
@@ -51,42 +51,51 @@ public class MyPanel extends JPanel implements Observer, Constants {
         int X = per.getX();
         int Y = per.getY();
 
-        // x < x +width , y < y + height
-        // x > x , y > y
         int dirX = dir[0];
         int dirY = dir[1];
 
-        if(X <= StartX )
+        if(X <= StartX  )
             dirX = 1;
-        if(X >= StartX + BOX_WIDTH)
+        if(X > StartX + BOX_WIDTH )
             dirX = -1;
 
-        if(Y <= StartY)
+        if(Y <= StartY )
             dirY = 1;
-        if(Y > StartY + BOX_HEIGHT)
+        if(Y > StartY + BOX_HEIGHT )
             dirY = -1;
 
 
+
+        //if(perLocation[per.getX() + dirX * 5][per.getY() + dirY * 5] != null)
+        // co-ordinated which needs to null;
+        int Xnull = (per.getX() - 400)/5;
+        int Ynull = (per.getY() - 100) / 5;
+        System.out.println("Xnull : " + Xnull + " Ynull: " + Ynull + " dirX : " + dir[0] + " dirY: " + dir[1]);
+        //perLocation[Xnull][Ynull] = null;
+        per.setX(X+ dirX * 5);
+        per.setY(Y+ dirY * 5);
+
+        int xVal = (per.getX() - 400)/5 , yVal = (per.getY() - 100) / 5;
+        System.out.println("xVal : " + xVal + " yVal: " + yVal+ " dirX : " + dirX+ " dirY: " + dirX);
         per.setDir(new int[]{dirX, dirY});
-        per.setX(per.getX() + dirX * 5);
-        per.setY(per.getY() + dirY * 5);
+        //perLocation[xVal][yVal] = per;
     }
 
     private void createPersonInstances(){
         if(!isInstanceCreated){
 
-            for(int count = 0; count < 100; count++){
+            for(int count = 0; count < 10; count++){
                 int xVal = rand.nextInt(upperBound) , yVal = rand.nextInt(upperBound);
-
-                Person per = new Person((xVal * 5 )+ 400, (yVal * 5) + 100, false, new int[]{rand .nextBoolean() ? -1 : 1,rand .nextBoolean() ? -1 : 1});
+//              rand .nextBoolean() ? -1 : 1,rand .nextBoolean() ? -1 : 1
+                Person per = new Person((xVal * 5 ) + 400, (yVal * 5) + 100, false, new int[]{rand .nextBoolean() ? -1 : 1,rand .nextBoolean() ? -1 : 1});
                 perLocation[xVal][yVal] = per;
                 drawCircle(per);
             }
             isInstanceCreated = true;
         }
         else{
-            for(int i=0 ; i < perLocation.length; i++ ){
-                for(int j =0; j < perLocation[i].length; j++){
+            for(int i=0 ; i < perLocation.length  ; i++ ){
+                for(int j =0; j < perLocation[i].length ; j++){
                     if(perLocation[i][j] != null)
                         drawCircle(perLocation[i][j]);
                 }

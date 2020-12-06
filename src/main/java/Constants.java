@@ -11,7 +11,7 @@ public interface Constants {
     int BOX_WIDTH = 400;
     int StartX = 400;
     int StartY = 100;
-    int upperBound = 80;
+    int upperBound = 79;
 
 
 }
