@@ -17,9 +17,11 @@ public class MyPanel extends JPanel implements Observer, Constants {
 
     public void paint(Graphics g) {
         g2d = (Graphics2D) g;
+        g2d.fillRect(0, 0 , 1200, 900);
+        g2d.setColor(Color.LIGHT_GRAY);
         g2d.setColor(Color.GRAY);
-        g2d.fillRect(StartX,StartY, BOX_HEIGHT, BOX_WIDTH);
-        //g2d.fillRect(0, 100 , frameWidth, 300);
+        g2d.fillRect(StartX,StartY, BOX_HEIGHT + 20 , BOX_WIDTH + 20);
+
         // creating circle
         //g2d.setColor(Color.BLUE);
         //g2d.fillOval(570, 210, DIAMETER, DIAMETER);
@@ -33,7 +35,7 @@ public class MyPanel extends JPanel implements Observer, Constants {
     public void update(Observable observable, Object o) {
         if (o instanceof VirusSimulation) {
             updateLocations();
-            this.setBackground(Color.GREEN);
+            //this.setBackground(Color.BLUE);
             repaint();
         }
     }
