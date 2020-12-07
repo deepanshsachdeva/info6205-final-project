@@ -1,9 +1,11 @@
-import org.junit.jupiter.api.*;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class UnitTest {
 
     @Test
-    void demoTest(){
-        Assertions.assertEquals(1,1);
+    public void demoTest(){
+        assertEquals(1,1);
     }
 }
