@@ -22,12 +22,10 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>LATEST</version>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>6.6.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-
 </project>
