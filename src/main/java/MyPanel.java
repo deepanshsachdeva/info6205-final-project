@@ -17,8 +17,8 @@ public class MyPanel extends JPanel implements Observer, Constants {
 
     public void paint(Graphics g) {
         g2d = (Graphics2D) g;
-        g2d.fillRect(0, 0 , 1200, 900);
         g2d.setColor(Color.LIGHT_GRAY);
+        g2d.fillRect(0, 0 , 1200, 900);
         g2d.setColor(Color.GRAY);
         g2d.fillRect(StartX,StartY, BOX_HEIGHT + 20 , BOX_WIDTH + 20);
 
