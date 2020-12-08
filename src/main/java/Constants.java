@@ -12,6 +12,8 @@ public interface Constants {
     int StartX = 400;
     int StartY = 100;
     int upperBound = 79;
+    //int population = 0;
+
 
 
 }
