@@ -84,6 +84,7 @@ public class GridView implements ActionListener, Constants {
         frame.setTitle(APP_NAME);
         frame.setResizable(false);
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
         frame.setBackground(Color.GREEN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -92,11 +93,14 @@ public class GridView implements ActionListener, Constants {
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setLeftComponent(getParamsPanel());
         splitPane.setDividerLocation(300);
+        //panel.setSize(400,400);
         splitPane.setRightComponent(panel);
 
         frame.add(splitPane);
 
         frame.setVisible(true);
+        //frame.pack();
+        //frame.setLocationRelativeTo(null);
     }
 
     public static void main(String[] args) {
@@ -112,20 +116,20 @@ public class GridView implements ActionListener, Constants {
         System.out.println("Infection Rate = "+getInfectionRate());
         System.out.println("Death Rate = "+getDeathRate());
 
-//        if (sim.isPaused()) {
-//            btnStart.setText("Pause");
-//            sim.startSim();
-//        } else if (sim.isRunning()) {
-//            sim.pauseSim();
-//            sim.setRunning(false);
-//            btnStart.setText("Start");
-//        } else {
-//            System.out.println("Start was pressed");
-//            sim.addObserver(panel);
-//            sim.startSim();
-//            sim.setRunning(true); // force this on early, because we're about to reset the buttons
-//            btnStart.setText("Pause");
-//        }
+       if (sim.isPaused()) {
+           btnStart.setText("Pause");
+           sim.startSim();
+       } else if (sim.isRunning()) {
+           sim.pauseSim();
+           sim.setRunning(false);
+           btnStart.setText("Start");
+       } else {
+           System.out.println("Start was pressed");
+           sim.addObserver(panel);
+           sim.startSim();
+           sim.setRunning(true); // force this on early, because we're about to reset the buttons
+           btnStart.setText("Pause");
+       }
     }
 
 
