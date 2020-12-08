@@ -111,6 +111,7 @@ public class GridView implements ActionListener, Constants {
     public void actionPerformed(ActionEvent actionEvent) {
 
         System.out.println("Total Population = "+getTotalPopulation());
+        int population = getTotalPopulation();
         System.out.println("Infected Population = "+getInfectedPopulation());
         System.out.println("Social Distancing = "+getSocialDistancing());
         System.out.println("Infection Rate = "+getInfectionRate());
