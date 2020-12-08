@@ -8,6 +8,15 @@ public class Person {
     private boolean isInfected;
     private Color color;
     int[] dir;
+    Integer index;
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
 
     final Random r = new Random();
 
