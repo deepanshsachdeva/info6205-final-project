@@ -6,13 +6,17 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class MyPanel extends JPanel implements Observer, Constants {
+    private int density;
+    private int totalPopulation;
 
+    public MyPanel(int density){
+        this.density = density;
+        this.totalPopulation = getActualPopulation(this.density);
+    }
     private Graphics2D g2d;
-   // Person per;
     Random rand = new Random();
     Boolean isInstanceCreated = false;
     List<Person> personList = new ArrayList<>();
-    //Person[][] perLocation = new Person[80][80];
     HashMap<String, Integer> map = new HashMap<>();
 
 
@@ -22,7 +26,6 @@ public class MyPanel extends JPanel implements Observer, Constants {
         g2d.fillRect(0, 0 , 1200, 900);
         g2d.setColor(Color.GRAY);
         g2d.fillRect(StartX,StartY, BOX_HEIGHT + 20 , BOX_WIDTH + 20);
-
         createPersonInstances();
     }
 
@@ -30,7 +33,6 @@ public class MyPanel extends JPanel implements Observer, Constants {
     public void update(Observable observable, Object o) {
         if (o instanceof VirusSimulation) {
             updateLocations();
-            //this.setBackground(Color.BLUE);
             repaint();
         }
     }
@@ -39,13 +41,6 @@ public class MyPanel extends JPanel implements Observer, Constants {
         for(Person per : personList){
             updateCoordinates(per);
         }
-        /*for(int i=0 ; i < perLocation.length ; i++ ){
-            for(int j =0; j < perLocation[i].length ; j++){
-                if(perLocation[i][j] != null)
-                    updateCoordinates(perLocation[i][j]);
-            }
-        }*/
-
     }
     private void updateCoordinates(Person per){
         int[] dir = per.getDir();
@@ -65,18 +60,9 @@ public class MyPanel extends JPanel implements Observer, Constants {
         if(Y > StartY + BOX_HEIGHT )
             dirY = -1;
 
-
-
-        //if(perLocation[per.getX() + dirX * 5][per.getY() + dirY * 5] != null)
         // co-ordinated which needs to null;
-        int Xnull = (per.getX() - 400)/5;
-        int Ynull = (per.getY() - 100) / 5;
-        //System.out.println("Xnull : " + Xnull + " Ynull: " + Ynull + " dirX : " + dir[0] + " dirY: " + dir[1]);
-        //perLocation[Xnull][Ynull] = null;
         int nextX = X+ dirX * 5, nextY = Y+ dirY * 5;
         boolean isCollide = checkForCollision(nextX, nextY,per);
-
-
 
         if(!isCollide){
             per.setDir(new int[]{dirX, dirY});
@@ -91,19 +77,12 @@ public class MyPanel extends JPanel implements Observer, Constants {
             per.setY(Y+ (updatedDir[1] * 5));
             updateHashMap( per.getX(), per.getY(), per);
         }
-
-
-
-        int xVal = (per.getX() - 400)/5 , yVal = (per.getY() - 100) / 5;
-        //System.out.println("xVal : " + xVal + " yVal: " + yVal+ " dirX : " + dirX+ " dirY: " + dirX);
-
-        //perLocation[xVal][yVal] = per;
     }
 
     private void createPersonInstances(){
         if(!isInstanceCreated){
 
-            for(int count = 0; count < 30; count++){
+            for(int count = 0; count < totalPopulation; count++){
                 int xVal = rand.nextInt(upperBound) , yVal = rand.nextInt(upperBound);
 
                 Person per = new Person((xVal * 5 ) + 400, (yVal * 5) + 100, false, new int[]{rand .nextBoolean() ? -1 : 1,rand .nextBoolean() ? -1 : 1});
@@ -113,6 +92,7 @@ public class MyPanel extends JPanel implements Observer, Constants {
                     per.setInfected(true);
                 else
                     per.setInfected(false);
+
                 boolean result = addToHashMap(xVal, yVal,count );
                 personList.add(per);
                 drawCircle(per);
@@ -123,12 +103,6 @@ public class MyPanel extends JPanel implements Observer, Constants {
             for(Person per : personList){
                 drawCircle(per);
             }
-            /*for(int i=0 ; i < perLocation.length  ; i++ ){
-                for(int j =0; j < perLocation[i].length ; j++){
-                    if(perLocation[i][j] != null)
-                        drawCircle(perLocation[i][j]);
-                }
-            }*/
         }
 
     }
@@ -205,7 +179,6 @@ public class MyPanel extends JPanel implements Observer, Constants {
         return per;
     }
 
-
     private void updateHashMap(int prevX, int prevY, Person per){
         String preKey = getKey(prevX, prevY);
         map.put(preKey, new Integer(-1));
@@ -213,8 +186,14 @@ public class MyPanel extends JPanel implements Observer, Constants {
         String currKey = getKey(per.getX() , per.getY());
         map.put(currKey, new Integer(per.getIndex()));
     }
+
     private String getKey(int X, int Y){
         return "" + X +"-" +  Y;
+    }
+
+    // get population based density
+    private int getActualPopulation(int density){
+        return density/10;
     }
 }
 
