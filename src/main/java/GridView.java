@@ -11,7 +11,8 @@ public class GridView implements ActionListener, Constants {
     private MyPanel panel = null;
     private VirusSimulation sim = new VirusSimulation();
     private JButton btnStart;
-
+    JSplitPane splitPane;
+    JFrame frame;
     /**
      * Params for factor
      *
@@ -80,7 +81,7 @@ public class GridView implements ActionListener, Constants {
 
     private void initializeGrid(){
         //Simulation main screen frame.
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setTitle(APP_NAME);
         frame.setResizable(false);
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -88,19 +89,21 @@ public class GridView implements ActionListener, Constants {
         frame.setBackground(Color.GREEN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        panel = new MyPanel();
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPane.setLeftComponent(getParamsPanel());
+
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        Dimension maxSize = new Dimension(400, 500);
+        JPanel paramPanel = getParamsPanel();
+        paramPanel.setMaximumSize(maxSize);
+        splitPane.setLeftComponent(paramPanel);
+        JPanel emptyPanel = new JPanel();
+
+        splitPane.setRightComponent(emptyPanel);
+
         splitPane.setDividerLocation(300);
-        //panel.setSize(400,400);
-        splitPane.setRightComponent(panel);
-
         frame.add(splitPane);
 
         frame.setVisible(true);
-        //frame.pack();
-        //frame.setLocationRelativeTo(null);
     }
 
     public static void main(String[] args) {
@@ -126,6 +129,9 @@ public class GridView implements ActionListener, Constants {
            btnStart.setText("Start");
        } else {
            System.out.println("Start was pressed");
+           panel = new MyPanel(population);
+           splitPane.setRightComponent(panel);
+
            sim.addObserver(panel);
            sim.startSim();
            sim.setRunning(true); // force this on early, because we're about to reset the buttons
