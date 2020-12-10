@@ -72,7 +72,7 @@ public class VirusSimulation extends Observable implements Runnable {
     }
 
     private void updateSim() {
-        System.out.println("Updating the simulation " + ctr++);
+        //System.out.println("Updating the simulation " + ctr++);
         setChanged();
         notifyObservers(this); // Send a copy of the simulation
     }

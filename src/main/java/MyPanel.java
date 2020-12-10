@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.*;
@@ -19,6 +20,7 @@ public class MyPanel extends JPanel implements Observer, Constants {
     List<Person> personList = new ArrayList<>();
     HashMap<String, Integer> map = new HashMap<>();
 
+    HashMap<KeyValue, List<Person>> contact_tracing = new HashMap<>(); // type key value for contact tracing
 
     public void paint(Graphics g) {
         g2d = (Graphics2D) g;
@@ -39,10 +41,15 @@ public class MyPanel extends JPanel implements Observer, Constants {
 
     public void updateLocations(){
         for(Person per : personList){
-            updateCoordinates(per);
+            if(!(per.isInfected() && per.isFoll_quarantine()))
+                updateCoordinates(per);
         }
     }
     private void updateCoordinates(Person per){
+
+        if(per.isInfected() && per.isFoll_quarantine())
+            return;
+
         int[] dir = per.getDir();
         int X = per.getX();
         int Y = per.getY();
@@ -68,14 +75,16 @@ public class MyPanel extends JPanel implements Observer, Constants {
             per.setDir(new int[]{dirX, dirY});
             per.setX(X+ dirX * 5);
             per.setY(Y+ dirY * 5);
+            safeToMove(per);
             updateHashMap( X, Y, per);
         }
         else{
             per = changeDirection(per);
             int[] updatedDir = per.getDir();
-            per.setX(X+ (updatedDir[0] * 5));
-            per.setY(Y+ (updatedDir[1] * 5));
-            updateHashMap( per.getX(), per.getY(), per);
+                per.setX(X+ (updatedDir[0] * 5));
+                per.setY(Y+ (updatedDir[1] * 5));
+                safeToMove(per);
+                updateHashMap( per.getX(), per.getY(), per);
         }
     }
 
@@ -104,16 +113,17 @@ public class MyPanel extends JPanel implements Observer, Constants {
                 drawCircle(per);
             }
         }
-
     }
 
     private void drawCircle(Person person){
-        Shape circle = new Ellipse2D.Double(person.getX(),person.getY(), DIAMETER, DIAMETER);
-        if(person.isInfected())
-            g2d.setColor(Color.RED);
-        else
-            g2d.setColor(Color.GREEN);
-        g2d.fill(circle);
+
+            Shape circle = new Ellipse2D.Double(person.getX(),person.getY(), DIAMETER, DIAMETER);
+            if(person.isInfected()) // checking for infection
+                g2d.setColor(Color.RED);
+            else
+                g2d.setColor(Color.GREEN);
+            g2d.fill(circle);
+
     }
 
     private boolean addToHashMap(int xVal, int yVal, int perIndex){
@@ -144,12 +154,14 @@ public class MyPanel extends JPanel implements Observer, Constants {
                 return false; // No collision
             else{
                 Person nextPer = personList.get(index.intValue());
-                if(per.isInfected() || nextPer.isInfected())
+                if(per.isInfected() || nextPer.isInfected()) // if person is infected
                 {
-                    per.setInfected(true);
-                    nextPer.setInfected(true);
+                    check_for_spread(per, nextPer);
                 }
-                changeDirection(nextPer);
+                if(!(following_quarantine(nextPer)))
+                    changeDirection(nextPer);
+                else
+                    System.out.println("Person " + nextPer.getIndex() + " is in quarantine");
                 return true; // collision detected
             }
         }
@@ -158,13 +170,13 @@ public class MyPanel extends JPanel implements Observer, Constants {
     }
 
     private Person changeDirection(Person per){
-        int X = per.getX(), Y = getY();
+        int X = per.getDir()[0], Y = per.getDir()[1];
         int newX, newY;
 
         if(X == 1 && Y == 1){
             newX = -1; newY = 1;
         }else{
-            if(X == -1 && X == -1){
+            if(X == -1 && Y == -1){
                 newX = 1; newY = -1;
             }else
             if(X == 1 && Y == -1){
@@ -193,7 +205,39 @@ public class MyPanel extends JPanel implements Observer, Constants {
 
     // get population based density
     private int getActualPopulation(int density){
-        return density/10;
+        return density/5;
+    }
+
+    // checking wearing mask factor and preventing the spread
+    private boolean check_for_spread(Person per, Person nextPer){
+        if(nextPer.isFoll_quarantine()) // if the infected person following quarantine then No spread
+            return false;
+
+        if(per.isWearing_mask() || nextPer.isWearing_mask())
+            return false; // Virus spread prevented by mask
+        else{
+            per.setInfected(true);
+            nextPer.setInfected(true);
+            return true; // spreading of virus continue
+        }
+    }
+
+    // checking if person is infected and following quarantine
+    private boolean following_quarantine(Person per){
+        if(per.isInfected() && per.isFoll_quarantine())
+            return true;
+        else
+            return false;
+    }
+
+    private void safeToMove(Person per){
+        if (per.getY() < StartY - 5) {
+            int preX = per.getX(), preY = per.getY();
+            per.setX( (rand.nextInt(upperBound) * 5 ) + 400);
+            per.setY( (rand.nextInt(upperBound) * 5) + 100 );
+            updateHashMap(preX, preY, per);
+
+        }
     }
 }
 
