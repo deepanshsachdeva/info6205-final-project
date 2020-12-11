@@ -1,4 +1,4 @@
-# INF06205 Project - Fall 2020 - Team 5
+# Program Structures & Algoritms(INFO6205) Project - Fall 2020 - Team 5
 
 ## Virus Transmission Simulation
 
@@ -13,7 +13,7 @@ To simulate the spread of a virus, taking in account the following factors:
 
 ## Team
 - Deepansh Sachdeva (NUID 001399788)
-- Sunil Yadav (NUID)
+- Sunil Yadav (NUID 001492711)
 
 ## Screenshots
 
