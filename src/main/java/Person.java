@@ -69,13 +69,13 @@ public class Person {
         return r;
     }
 
-    public Person(int X, int Y, boolean isInfected, int[] dir){
+    public Person(int X, int Y, boolean isInfected, int[] dir) {
         setId(generateID());
         this.X = X;
         this.Y = Y;
         this.isInfected = isInfected;
         this.dir = dir;
-        if(isInfected)
+        if (isInfected)
             this.color = Color.RED;
         else
             this.color = Color.BLUE;
@@ -93,49 +93,65 @@ public class Person {
         this.id = id;
     }
 
-    public String generateID() {
-        int i = 4; String uid = "P-";
+    public Person() {
+            this.X = r.nextInt();
+            this.Y = r.nextInt();
 
-
-        while (i-- > 0) {
-            uid += r.nextInt(9);
+            int dirX = rand.nextBoolean() ? -1 : 1;
+            int dirY = rand.nextBoolean() ? -1 : 1;
+            this.dir = new int[]{dirX, dirY};
         }
-        return uid;
-    }
 
-    public boolean isFoll_quarantine() {
-        return foll_quarantine;
-    }
+    public Person( int X, int Y, int[] dir){
+            this.X = X;
+            this.Y = Y;
+            this.dir = dir;
+        }
 
-    public void setFoll_quarantine(boolean foll_quarantine) {
-        this.foll_quarantine = foll_quarantine;
-    }
+        public String generateID () {
+            int i = 4;
+            String uid = "P-";
 
-    public boolean isWearing_mask() {
-        return wearing_mask;
-    }
 
-    public void setWearing_mask(boolean wearing_mask) {
-        this.wearing_mask = wearing_mask;
-    }
+            while (i-- > 0) {
+                uid += r.nextInt(9);
+            }
+            return uid;
+        }
 
-    public boolean isFoll_socialDistancing() {
-        return foll_socialDistancing;
-    }
+        public boolean isFoll_quarantine () {
+            return foll_quarantine;
+        }
 
-    public void setFoll_socialDistancing(boolean foll_socialDistancing) {
-        this.foll_socialDistancing = foll_socialDistancing;
-    }
+        public void setFoll_quarantine ( boolean foll_quarantine){
+            this.foll_quarantine = foll_quarantine;
+        }
 
-    public boolean wear_mask(){
-        return rand .nextBoolean();
-    }
+        public boolean isWearing_mask () {
+            return wearing_mask;
+        }
 
-    public boolean follow_quarantine(){
-        return rand.nextBoolean();
-    }
+        public void setWearing_mask ( boolean wearing_mask){
+            this.wearing_mask = wearing_mask;
+        }
 
-    public boolean follow_social_distancing(){
-        return rand.nextBoolean();
+        public boolean isFoll_socialDistancing () {
+            return foll_socialDistancing;
+        }
+
+        public void setFoll_socialDistancing ( boolean foll_socialDistancing){
+            this.foll_socialDistancing = foll_socialDistancing;
+        }
+
+        public boolean wear_mask () {
+            return rand.nextBoolean();
+        }
+
+        public boolean follow_quarantine () {
+            return rand.nextBoolean();
+        }
+
+        public boolean follow_social_distancing () {
+            return rand.nextBoolean();
+        }
     }
-}

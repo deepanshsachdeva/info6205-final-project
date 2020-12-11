@@ -155,7 +155,7 @@ public class MyPanel extends JPanel implements Observer, Constants {
     }
 
     // check for collision
-    private boolean checkForCollision(int X , int Y, Person per){
+    public boolean checkForCollision(int X , int Y, Person per){
         String key = getKey(X, Y);
         if(map.containsKey(key)){
             Integer index = map.get(key);
@@ -183,7 +183,7 @@ public class MyPanel extends JPanel implements Observer, Constants {
             return false;
     }
 
-    private Person changeDirection(Person per){
+    public Person changeDirection(Person per){
         int X = per.getDir()[0], Y = per.getDir()[1];
         int newX, newY;
 
@@ -213,17 +213,17 @@ public class MyPanel extends JPanel implements Observer, Constants {
         map.put(currKey, new Integer(per.getIndex()));
     }
 
-    private String getKey(int X, int Y){
+    public String getKey(int X, int Y){
         return "" + X +"-" +  Y;
     }
 
     // get population based density
-    private int getActualPopulation(int density){
-        return density / 5;
+    public int getActualPopulation(int density){
+        return density  /5;
     }
 
     // checking wearing mask factor and preventing the spread
-    private boolean check_for_spread(Person per, Person nextPer){
+    public boolean check_for_spread(Person per, Person nextPer){
         if(nextPer.isFoll_quarantine()) // if the infected person following quarantine then No spread
             return false;
 
@@ -237,7 +237,7 @@ public class MyPanel extends JPanel implements Observer, Constants {
     }
 
     // checking if person is infected and following quarantine
-    private boolean following_quarantine(Person per){
+    public boolean following_quarantine(Person per){
         if(per.isInfected() && per.isFoll_quarantine())
             return true;
         else
@@ -255,9 +255,14 @@ public class MyPanel extends JPanel implements Observer, Constants {
 
     public List<Person> generatePopulation(int density){
         List<Person> population = new ArrayList<>();
+
         for(int count = 0; count< density; count++){
-            int xVal = rand.nextInt(upperBound) , yVal = rand.nextInt(upperBound);
-            Person per = new Person((xVal * 5 ) + 400, (yVal * 5) + 100, false, new int[]{rand .nextBoolean() ? -1 : 1,rand .nextBoolean() ? -1 : 1});
+            int xVal = rand.nextInt(upperBound);
+            int yVal = rand.nextInt(upperBound);
+            int dirX = rand.nextBoolean() ? -1 : 1;
+            int dirY = rand.nextBoolean() ? -1 : 1;
+
+            Person per = new Person((xVal * 5 ) + 400, (yVal * 5) + 100, false, new int[]{dirX,dirY});
             per.setIndex(new Integer(count));
 
             if(count % 5 == 0)
