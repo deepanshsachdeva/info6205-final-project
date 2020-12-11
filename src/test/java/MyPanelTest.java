@@ -52,7 +52,7 @@ public class MyPanelTest {
     }
 
     @Test
-    public void spread1Test(){
+    public void spreadTest1(){
         MyPanel panel = new MyPanel(100);
         Person per = new Person();
         Person nextPer = new Person();
@@ -61,7 +61,7 @@ public class MyPanelTest {
     }
 
     @Test
-    public void spread2Test(){
+    public void spreadTest2(){
         Random r = new Random();
 
         MyPanel panel = new MyPanel(100);
@@ -77,7 +77,7 @@ public class MyPanelTest {
     }
 
     @Test
-    public void spread3Test(){
+    public void spreadTest3(){
         Random r = new Random();
 
         MyPanel panel = new MyPanel(100);
@@ -97,6 +97,54 @@ public class MyPanelTest {
         assertTrue(per.isInfected());
         assertTrue(nextPer.isInfected());
         assertTrue(check);
+    }
+
+    @Test
+    public void changeDirectionTest1(){
+        Random r = new Random();
+
+        MyPanel panel = new MyPanel(100);
+        Person per = new Person(r.nextInt(), r.nextInt(), new int[]{1,1});
+        panel.changeDirection(per);
+
+        assertEquals(-1,per.getDir()[0]);
+        assertEquals(1,per.getDir()[1]);
+    }
+
+    @Test
+    public void changeDirectionTest2(){
+        Random r = new Random();
+
+        MyPanel panel = new MyPanel(100);
+        Person per = new Person(r.nextInt(), r.nextInt(), new int[]{-1,-1});
+        panel.changeDirection(per);
+
+        assertEquals(1,per.getDir()[0]);
+        assertEquals(-1,per.getDir()[1]);
+    }
+
+    @Test
+    public void changeDirectionTest3(){
+        Random r = new Random();
+
+        MyPanel panel = new MyPanel(100);
+        Person per = new Person(r.nextInt(), r.nextInt(), new int[]{1,-1});
+        panel.changeDirection(per);
+
+        assertEquals(-1,per.getDir()[0]);
+        assertEquals(-1,per.getDir()[1]);
+    }
+
+    @Test
+    public void changeDirectionTest4(){
+        Random r = new Random();
+
+        MyPanel panel = new MyPanel(100);
+        Person per = new Person(r.nextInt(), r.nextInt(), new int[]{-1,-1});
+        panel.changeDirection(per);
+
+        assertEquals(1,per.getDir()[0]);
+        assertEquals(-1,per.getDir()[1]);
     }
 
     @Test
