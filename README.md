@@ -1,17 +1,19 @@
-# Program Structures & Algoritms(INFO6205) Project - Fall 2020 - Team 5
+# Program Structures & Algoritms(INFO6205) Project - Fall 2020
 
 ## Virus Transmission Simulation
 
 To simulate the spread of a virus, taking in account the following factors:
 - Total Population
 - Infected Population
-- Social Distancing
 - Infection Rate
-- Death Rate
+- Social Distancing
+- Wearing masks
+- Follow quarantine
+- Contact Tracing
 
 ![simulation-gif](extra/Simulation.gif)
 
-## Team
+## Team #5
 - Deepansh Sachdeva (NUID 001399788)
 - Sunil Yadav (NUID 001492711)
 
