@@ -70,7 +70,7 @@ public class Person {
     }
 
     public Person(int X, int Y, boolean isInfected, int[] dir){
-        this.id = generateID();
+        setId(generateID());
         this.X = X;
         this.Y = Y;
         this.isInfected = isInfected;
@@ -82,8 +82,15 @@ public class Person {
 
         setWearing_mask(wear_mask());
         setFoll_quarantine(follow_quarantine());
-        //setFoll_quarantine(true);
         setFoll_socialDistancing(follow_social_distancing());
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String generateID() {

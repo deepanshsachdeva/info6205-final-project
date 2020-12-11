@@ -15,7 +15,7 @@ public class MyPanel extends JPanel implements Observer, Constants {
     List<Person> personList = new ArrayList<>();
     HashMap<String, Integer> map = new HashMap<>();
     SimulationResult benchMark;
-    HashMap<KeyValue, List<Person>> contact_tracing = new HashMap<>(); // type key value for contact tracing
+    LinkedHashMap<Person, List<Person>> contact_list = new LinkedHashMap<>(); // type key value for contact tracing
     int ctr=0;
 
     public MyPanel(int density){
@@ -100,8 +100,10 @@ public class MyPanel extends JPanel implements Observer, Constants {
                 Person per = new Person((xVal * 5 ) + 400, (yVal * 5) + 100, false, new int[]{rand .nextBoolean() ? -1 : 1,rand .nextBoolean() ? -1 : 1});
                 per.setIndex(new Integer(count));
 
-                if(count % 5 == 0)
+                if(count % 5 == 0){
                     per.setInfected(true);
+                    addSingleSource(per);
+                }
                 else
                     per.setInfected(false);
 
@@ -109,7 +111,8 @@ public class MyPanel extends JPanel implements Observer, Constants {
                 personList.add(per);
                 drawCircle(per);
             }
-            benchMark = new SimulationResult(personList);
+            benchMark = new SimulationResult(personList, contact_list);
+            benchMark.printHeaderResult();
             isInstanceCreated = true;
         }
         else{
@@ -162,12 +165,17 @@ public class MyPanel extends JPanel implements Observer, Constants {
                 Person nextPer = personList.get(index.intValue());
                 if(per.isInfected() || nextPer.isInfected()) // if person is infected
                 {
-                    check_for_spread(per, nextPer);
+                    boolean spread = check_for_spread(per, nextPer);
+                    if(spread)
+                    {
+                        // for contact tracing
+                        addForContactTracing(per, nextPer);
+                        addForContactTracing(nextPer, per);
+                    }
                 }
                 if(!(following_quarantine(nextPer)))
                     changeDirection(nextPer);
-                //else
-                    //System.out.println("Person " + nextPer.getIndex() + " is in quarantine");
+
                 return true; // collision detected
             }
         }
@@ -211,7 +219,7 @@ public class MyPanel extends JPanel implements Observer, Constants {
 
     // get population based density
     private int getActualPopulation(int density){
-        return density  /5;
+        return density / 5;
     }
 
     // checking wearing mask factor and preventing the spread
@@ -242,7 +250,6 @@ public class MyPanel extends JPanel implements Observer, Constants {
             per.setX( (rand.nextInt(upperBound) * 5 ) + 400);
             per.setY( (rand.nextInt(upperBound) * 5) + 100 );
             updateHashMap(preX, preY, per);
-
         }
     }
 
@@ -263,6 +270,34 @@ public class MyPanel extends JPanel implements Observer, Constants {
         return population;
     }
 
+    // add single source for contact tracing
+    public LinkedHashMap<Person, List<Person>> addSingleSource(Person p){
+        if(!contact_list.containsKey(p))
+            contact_list.put(p, new ArrayList<Person>());
+
+        return contact_list;
+    }
+    // for contact tracing
+    public void addForContactTracing(Person per, Person nextPerson){
+        List<Person> list;
+        if(contact_list.containsKey(per)){
+            list = contact_list.get(per);
+            if(!list.contains(nextPerson)){
+                list.add(nextPerson);
+                contact_list.put(per, list);
+            }
+        }
+        else{
+            list = new ArrayList<>();
+            list.add(nextPerson);
+            contact_list.put(per, list);
+        }
+    }
+
+    // get LinkedHashMap for contact tracing
+    public LinkedHashMap<Person, List<Person>> getContact_tracing_list(){
+        return contact_list;
+    }
 }
 
 

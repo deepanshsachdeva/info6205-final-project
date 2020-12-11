@@ -1,4 +1,6 @@
 import org.junit.Test;
+
+import java.util.LinkedHashMap;
 import java.util.List;
 import static org.junit.Assert.*;
 
@@ -9,7 +11,8 @@ public class SimulationResultTest {
         MyPanel m = new MyPanel(100);
         List<Person> population = m.generatePopulation(100);
         assertNotNull(population);
-        SimulationResult sm = new SimulationResult(population);
+        LinkedHashMap<Person, List<Person>> contact_list = m.getContact_tracing_list();
+        SimulationResult sm = new SimulationResult(population, contact_list);
         assertNotNull(sm);
         assertEquals(100,sm.getTotalPopulation(population));
         assertNotEquals(0, sm.getTotalPopulation(population));
@@ -20,7 +23,8 @@ public class SimulationResultTest {
     public void getHealthyCountTest(){
         MyPanel m = new MyPanel(100);
         List<Person> population = m.generatePopulation(100);
-        SimulationResult sm = new SimulationResult(population);
+        LinkedHashMap<Person, List<Person>> contact_list = m.getContact_tracing_list();
+        SimulationResult sm = new SimulationResult(population, contact_list);
         assertNotEquals(-1, sm.getHealthyCount(population));
     }
 
@@ -29,7 +33,8 @@ public class SimulationResultTest {
         MyPanel m = new MyPanel(100);
         List<Person> population = m.generatePopulation(100);
         assertNotNull(population);
-        SimulationResult sm = new SimulationResult(population);
+        LinkedHashMap<Person, List<Person>> contact_list = m.getContact_tracing_list();
+        SimulationResult sm = new SimulationResult(population, contact_list);
         assertNotNull(sm);
         assertNotEquals(-1, sm.getTotalInfected(population));
     }
@@ -39,7 +44,8 @@ public class SimulationResultTest {
         MyPanel m = new MyPanel(100);
         List<Person> population = m.generatePopulation(100);
         assertNotNull(population);
-        SimulationResult sm = new SimulationResult(population);
+        LinkedHashMap<Person, List<Person>> contact_list = m.getContact_tracing_list();
+        SimulationResult sm = new SimulationResult(population, contact_list);
         assertNotNull(sm);
         assertTrue(sm.getQuarantineCount(population) >= 0 && sm.getQuarantineCount(population) <= 100);
     }
@@ -49,7 +55,8 @@ public class SimulationResultTest {
         MyPanel m = new MyPanel(100);
         List<Person> population = m.generatePopulation(100);
         assertNotNull(population);
-        SimulationResult sm = new SimulationResult(population);
+        LinkedHashMap<Person, List<Person>> contact_list = m.getContact_tracing_list();
+        SimulationResult sm = new SimulationResult(population, contact_list);
         assertNotNull(sm);
         assertTrue(sm.getPopulationWithMask(population) >= 0 && sm.getPopulationWithMask(population) <= 100);
     }
@@ -59,7 +66,8 @@ public class SimulationResultTest {
         MyPanel m = new MyPanel(100);
         List<Person> population = m.generatePopulation(100);
         assertNotNull(population);
-        SimulationResult sm = new SimulationResult(population);
+        LinkedHashMap<Person, List<Person>> contact_list = m.getContact_tracing_list();
+        SimulationResult sm = new SimulationResult(population, contact_list);
         assertNotNull(sm);
         assertTrue(sm.getPopulationFoll_SocialDistancing(population) >= 0 && sm.getPopulationFoll_SocialDistancing(population) <= 100);
     }
@@ -69,7 +77,8 @@ public class SimulationResultTest {
         MyPanel m = new MyPanel(100);
         List<Person> population = m.generatePopulation(100);
         assertNotNull(population);
-        SimulationResult sm = new SimulationResult(population);
+        LinkedHashMap<Person, List<Person>> contact_list = m.getContact_tracing_list();
+        SimulationResult sm = new SimulationResult(population, contact_list);
         assertNotNull(sm);
         assertTrue(sm.getInfectedQuarantine(population) >= 0 && sm.getInfectedQuarantine(population) <= 100);
     }
