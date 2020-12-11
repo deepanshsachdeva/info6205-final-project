@@ -9,18 +9,20 @@ import java.util.List;
 public class MyPanel extends JPanel implements Observer, Constants {
     private int density;
     private int totalPopulation;
-
-    public MyPanel(int density){
-        this.density = density;
-        this.totalPopulation = getActualPopulation(this.density);
-    }
     private Graphics2D g2d;
     Random rand = new Random();
     Boolean isInstanceCreated = false;
     List<Person> personList = new ArrayList<>();
     HashMap<String, Integer> map = new HashMap<>();
-
+    SimulationResult benchMark;
     HashMap<KeyValue, List<Person>> contact_tracing = new HashMap<>(); // type key value for contact tracing
+    int ctr=0;
+
+    public MyPanel(int density){
+        this.density = density;
+        this.totalPopulation = getActualPopulation(this.density);
+    }
+
 
     public void paint(Graphics g) {
         g2d = (Graphics2D) g;
@@ -29,6 +31,7 @@ public class MyPanel extends JPanel implements Observer, Constants {
         g2d.setColor(Color.GRAY);
         g2d.fillRect(StartX,StartY, BOX_HEIGHT + 20 , BOX_WIDTH + 20);
         createPersonInstances();
+        benchMark.printSimulationResult();
     }
 
     @Override
@@ -106,6 +109,7 @@ public class MyPanel extends JPanel implements Observer, Constants {
                 personList.add(per);
                 drawCircle(per);
             }
+            benchMark = new SimulationResult(personList);
             isInstanceCreated = true;
         }
         else{
@@ -118,10 +122,12 @@ public class MyPanel extends JPanel implements Observer, Constants {
     private void drawCircle(Person person){
 
             Shape circle = new Ellipse2D.Double(person.getX(),person.getY(), DIAMETER, DIAMETER);
-            if(person.isInfected()) // checking for infection
-                g2d.setColor(Color.RED);
-            else
-                g2d.setColor(Color.GREEN);
+            if(person.isInfected() && person.isFoll_quarantine()) // checking for infection
+                g2d.setColor(Color.ORANGE);
+            else if(person.isInfected())
+                    g2d.setColor(Color.RED);
+                else
+                    g2d.setColor(Color.GREEN);
             g2d.fill(circle);
 
     }
@@ -160,8 +166,8 @@ public class MyPanel extends JPanel implements Observer, Constants {
                 }
                 if(!(following_quarantine(nextPer)))
                     changeDirection(nextPer);
-                else
-                    System.out.println("Person " + nextPer.getIndex() + " is in quarantine");
+                //else
+                    //System.out.println("Person " + nextPer.getIndex() + " is in quarantine");
                 return true; // collision detected
             }
         }
@@ -205,7 +211,7 @@ public class MyPanel extends JPanel implements Observer, Constants {
 
     // get population based density
     private int getActualPopulation(int density){
-        return density/5;
+        return density  /5;
     }
 
     // checking wearing mask factor and preventing the spread
@@ -239,6 +245,24 @@ public class MyPanel extends JPanel implements Observer, Constants {
 
         }
     }
+
+    public List<Person> generatePopulation(int density){
+        List<Person> population = new ArrayList<>();
+        for(int count = 0; count< density; count++){
+            int xVal = rand.nextInt(upperBound) , yVal = rand.nextInt(upperBound);
+            Person per = new Person((xVal * 5 ) + 400, (yVal * 5) + 100, false, new int[]{rand .nextBoolean() ? -1 : 1,rand .nextBoolean() ? -1 : 1});
+            per.setIndex(new Integer(count));
+
+            if(count % 5 == 0)
+                per.setInfected(true);
+            else
+                per.setInfected(false);
+
+            population.add(per);
+        }
+        return population;
+    }
+
 }
 
 
