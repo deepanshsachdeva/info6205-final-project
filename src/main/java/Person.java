@@ -86,6 +86,21 @@ public class Person {
         setFoll_socialDistancing(follow_social_distancing());
     }
 
+    public Person(){
+        this.X = r.nextInt();
+        this.Y = r.nextInt();
+
+        int dirX = rand.nextBoolean() ? -1 : 1;
+        int dirY = rand.nextBoolean() ? -1 : 1;
+        this.dir = new int[]{dirX,dirY};
+    }
+
+    public Person(int X, int Y, int[] dir){
+        this.X = X;
+        this.Y = Y;
+        this.dir = dir;
+    }
+
     public String generateID() {
         int i = 4; String uid = "P-";
 
