@@ -9,6 +9,8 @@ To simulate the spread of a virus, taking in account the following factors:
 - Infection Rate
 - Death Rate
 
+![](extra/Simulation.gif)
+
 ## Team
 
 - Deepansh Sachdeva (NUID 001399788)
