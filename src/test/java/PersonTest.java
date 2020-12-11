@@ -11,7 +11,6 @@ public class PersonTest {
         Random r = new Random();
         Person p = new Person(r.nextInt(), r.nextInt(), false, new int[]{r .nextBoolean() ? -1 : 1, r .nextBoolean() ? -1 : 1});
         assertEquals(p.getColor(), Color.BLUE);
-//        Assertions.assertEquals(p.getColor(), Color.GREEN);
     }
 
     @Test
@@ -19,6 +18,5 @@ public class PersonTest {
         Random r = new Random();
         Person p = new Person(r.nextInt(), r.nextInt(), true, new int[]{r .nextBoolean() ? -1 : 1, r .nextBoolean() ? -1 : 1});
         assertEquals(p.getColor(), Color.RED);
-//        Assertions.assertEquals(p.getColor(), Color.RED);
     }
 }
