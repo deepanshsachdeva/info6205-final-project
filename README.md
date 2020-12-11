@@ -9,12 +9,25 @@ To simulate the spread of a virus, taking in account the following factors:
 - Infection Rate
 - Death Rate
 
-![](extra/Simulation.gif)
+![simulation-gif](extra/Simulation.gif)
 
 ## Team
-
 - Deepansh Sachdeva (NUID 001399788)
 - Sunil Yadav (NUID)
+
+## Screenshots
+
+### All mandates followed
+![all-mandate](Results/Screenshots/All_Mandate.JPG)
+
+### Mask & Quarantine NOT followed
+![no-mask-no-quarantine](Results/Screenshots/All_Mandate.JPG)
+
+### Mask mandate NOT followed
+![all-mandate](Results/Screenshots/No_Mask_Mandate.JPG)
+
+### Quarantine mandate NOT followed
+![no-quarantine](Results/Screenshots/No_Quarantine.JPG)
 
 ## Installation & Usage
 
@@ -32,5 +45,4 @@ git clone https://github.com/deepanshsachdeva/info6205-final-project.git
 
 
 ## License
-
 This project is licensed under the MIT - see the [LICENSE](LICENSE) file for details
