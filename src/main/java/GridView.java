@@ -255,32 +255,6 @@ public class GridView implements ActionListener, Constants {
         paramsPanel.add(socialDistanceSlider);
         paramsPanel.add(socialDistanceLabel);
 
-        /**
-         * Death Rate
-         *
-         */
-        paramsPanel.add(new Label("Death Rate:"));
-        JSlider deathSlider = new JSlider(0, 100, getDeathRate());
-        deathSlider.setMinorTickSpacing(5);
-        deathSlider.setMajorTickSpacing(10);
-        deathSlider.setPaintTicks(true);
-        deathSlider.setPaintLabels(true);
-
-        final Label deathLabel = new Label(deathSlider.getValue()+"%");
-
-        deathSlider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                JSlider jslider = (JSlider) e.getSource();
-                setDeathRate(jslider.getValue());
-
-                deathLabel.setText(getDeathRate()+"%");
-            }
-        });
-
-        paramsPanel.add(deathSlider);
-        paramsPanel.add(deathLabel);
-
         paramsPanel.add(btnStart);
 
         return paramsPanel;
