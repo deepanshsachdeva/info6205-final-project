@@ -1,4 +1,7 @@
-# INF06205 Project - Virus Transmission Simulation - Fall 2020
+# INF06205 Project - Fall 2020 - Team 5
+
+## Virus Transmission Simulation
+
 To simulate the spread of a virus, taking in account the following factors:
 - Total Population
 - Infected Population
